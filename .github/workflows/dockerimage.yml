@@ -10,18 +10,16 @@ jobs:
         dcmtk_version: ['3.6.4', '3.6.6', '3.6.7', '3.6.8']
         node_version: ['22.4.0-alpine3.20', '22.4.0-alpine3.19', '20.15.0-alpine3.20', '20.15.0-alpine3.19','18.20.3-alpine3.20', '18.20.3-alpine3.19']
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
+
       - name: Build and Publish DCMTK ${{ matrix.dcmtk_version }} NodeJS ${{ matrix.node_version }}
         env:
           DCMTK_VER: ${{ matrix.dcmtk_version }}
           NODE_VER: ${{ matrix.node_version }}
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: michaelleehobbs/nodejs-dcmtk
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          name: some-junk
+          username: username
+          password: password
           buildargs: DCMTK_VER,NODE_VER
-          tag_with_ref: true
-          tag_with_sha: true
-          push: ${{ startsWith(github.ref, 'refs/heads/r') }}
-          tags: "dcmtk-${{ matrix.dcmtk_version }}-nodejs-${{ matrix.node_version }}"
+          no_push: true
